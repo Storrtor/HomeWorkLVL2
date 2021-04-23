@@ -4,8 +4,6 @@ public class Cat implements Runable, Jumpable{
     public Cat() {
     }
 
-    //3 метра
-
     @Override
     public void jump() {
         System.out.println("Кот прыгнул");
@@ -46,6 +44,11 @@ public class Cat implements Runable, Jumpable{
         } else {
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{}";
     }
 
 

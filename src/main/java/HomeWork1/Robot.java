@@ -45,4 +45,9 @@ public class Robot implements Runable, Jumpable{
             return true;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Robot{}";
+    }
 }

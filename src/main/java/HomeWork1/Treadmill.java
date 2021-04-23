@@ -1,10 +1,10 @@
 package HomeWork1;
 
-public class Treadmill extends Obstacle {
+public class Treadmill {
     private int length;
 
     public Treadmill(int length) {
-        super.validate(length);
+        validate(length);
         this.length = length;
     }
 
@@ -13,7 +13,7 @@ public class Treadmill extends Obstacle {
     }
 
     public void setLength(int length) {
-        super.validate(length);
+        validate(length);
         this.length = length;
     }
 
@@ -27,4 +27,12 @@ public class Treadmill extends Obstacle {
                 "length=" + length +
                 '}';
     }
+
+    public void validate(int length){
+        if(length < 0 || length > 1000) {
+            throw new IllegalArgumentException("Дорожка может быть длиной от 0 до 1000");
+        }
+    }
+
+
 }

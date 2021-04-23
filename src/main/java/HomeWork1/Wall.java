@@ -1,11 +1,11 @@
 package HomeWork1;
 
-public class Wall extends Obstacle {
+public class Wall {
 
     private int high;
 
     public Wall(int high) {
-        super.validate(high);
+        validate(high);
         this.high = high;
     }
 
@@ -13,8 +13,8 @@ public class Wall extends Obstacle {
         return high;
     }
 
-    public void setHigh(int hih) {
-        super.validate(high);
+    public void setHigh(int high) {
+        validate(high);
         this.high = high;
     }
 
@@ -27,5 +27,10 @@ public class Wall extends Obstacle {
         return "Wall{" +
                 "high=" + high +
                 '}';
+    }
+    public void validate(int high){
+        if(high < 0 || high > 15) {
+            throw new IllegalArgumentException("Стена может быть высотой от 0 до 15 метров");
+        }
     }
 }
