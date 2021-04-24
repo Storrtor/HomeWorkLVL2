@@ -18,7 +18,6 @@ public class Human implements Runable, Jumpable{
     public void jump(Wall wall){
         if (validateJump(wall) == false){
             System.out.println("Человек не смог перепрыгнуть стену высотой " + wall.getHigh());
-
         } else {
             System.out.println("Человек перепрыгнул стену высотой " + wall.getHigh());
         }

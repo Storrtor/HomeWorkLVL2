@@ -18,6 +18,8 @@ public class MyApp {
             ((Jumpable) runner).jump();
         }
 
+        System.out.println("------");
+
         /**
          * 2.Создайте два класса: беговая дорожка и стена, при прохождении через которые,
          * участники должны выполнять соответствующие действия (бежать или прыгать),
@@ -27,14 +29,12 @@ public class MyApp {
         Treadmill treadmill = new Treadmill(100);
 
         Jumpable catJump = new Cat();
-        Jumpable humanJump = new Human();//
+        Jumpable humanJump = new Human();
         Jumpable jumpers[] = new Jumpable[]{catJump, humanJump, robot};
         for (Jumpable jumper : jumpers) {
             jumper.jump(wall);
             ((Runable) jumper).run(treadmill);
         }
-
-        System.out.println("-------");
 
         /**
          * 3.Создайте два массива: с участниками и препятствиями, и заставьте всех участников пройти этот набор препятствий.
@@ -54,9 +54,10 @@ public class MyApp {
         Object objects[] = new Object[]{wall1, treadmill1, treadmill2, wall2, treadmill3, wall3};
 
         for (Runable runner : runners) {
+            System.out.println("-------");
             System.out.println("Забег " + runner);
             for (Object object : objects) {
-                if(object.getClass().equals(wall1.getClass())){
+                if(object instanceof Wall){
                    ((Jumpable) runner).jump((Wall) (object));
                    if(((Jumpable) runner).validateJump((Wall) object) == false){
                         break;
@@ -69,6 +70,7 @@ public class MyApp {
                 }
             }
         }
-
     }
+
+
 }
