@@ -3,62 +3,44 @@ package HomeWork1;
 public class Cat implements Runable, Jumpable{
     private String name;
 
+    private static final int LIMIT_HIGH = 10;
+    private static final int LIMIT_LENGTH = 600;
+
     public Cat(String name) {
         this.name = name;
     }
 
     @Override
-    public void jump() {
-        System.out.println(this.name + " прыгнул");
-    }
-
-    @Override
-    public void run() {
-        System.out.println(this.name + " пробежал");
-    }
-
-    @Override
-    public void jump(HighObstacle highObstacle) {
-        if(validate(highObstacle) == true){
-            System.out.println(this.name + " перепрыгнул препятствие высотой " + highObstacle.getParameter());
+    public boolean overtake(Obstacle obstacle) {
+        if(obstacle instanceof HighObstacle){
+            return Jumpable.super.overtake(obstacle);
         } else {
+            return Runable.super.overtake(obstacle);
+        }
+    }
+
+    @Override
+    public boolean jump(HighObstacle highObstacle) {
+        if(highObstacle.getParameter() > LIMIT_HIGH){
             System.out.println(this.name + " не перепрыгнул препятствие высотой " + highObstacle.getParameter());
-        }
-
-    }
-
-    @Override
-    public void run(LengthObstacle lengthObstacle) {
-        if(validate(lengthObstacle) == true){
-            System.out.println(this.name + " пробежал дорожку длиной " + lengthObstacle.getParameter());
+            return false;
         } else {
-            System.out.println(this.name + " не пробежал препятствие высотой " + lengthObstacle.getParameter());
+            System.out.println(this.name + " перепрыгнул препятствие высотой " + highObstacle.getParameter());
+            return true;
         }
     }
 
     @Override
-    public boolean canPass(Obstacle obstacle) {
-        if(obstacle.getParameter() > 1000){
+    public boolean run(LengthObstacle lengthObstacle) {
+        if(lengthObstacle.getParameter() > LIMIT_LENGTH){
+            System.out.println(this.name + " не пробежал препятствие длиной " + lengthObstacle.getParameter());
             return false;
+        } else {
+            System.out.println(this.name + " пробежал дорожку длиной " + lengthObstacle.getParameter());
+            return true;
         }
-        return Jumpable.super.canPass(obstacle);
     }
 
-    @Override
-    public boolean validate(HighObstacle highObstacle) {
-        if(highObstacle.getParameter() > 10){
-            return false;
-        }
-        return Jumpable.super.validate(highObstacle);
-    }
-
-    @Override
-    public boolean validate(LengthObstacle lengthObstacle) {
-        if(lengthObstacle.getParameter() > 600){
-            return false;
-        }
-        return Runable.super.validate(lengthObstacle);
-    }
 
     @Override
     public String toString() {

@@ -1,7 +1,7 @@
 package HomeWork1;
 
 abstract class Obstacle {
-    private int parameter;
+    private final int parameter;
 
     public Obstacle(int parameter) {
         validation(parameter);

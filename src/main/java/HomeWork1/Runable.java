@@ -5,11 +5,18 @@ public interface Runable extends Passable{
         System.out.println("пробежал");
     }
 
-    default void run(LengthObstacle lengthObstacle){
+    @Override
+    default boolean overtake(Obstacle obstacle) {
+        return run((LengthObstacle) obstacle);
+    }
+
+    default boolean run(LengthObstacle lengthObstacle){
         if (validate(lengthObstacle) == true){
             System.out.println("Пробежал препятствие");
+            return true;
         } else {
             System.out.println("Не пробежал препятствие");
+            return false;
         }
     }
 

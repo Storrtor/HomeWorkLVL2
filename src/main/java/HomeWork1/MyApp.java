@@ -11,39 +11,23 @@ public class MyApp {
         Cat cat = new Cat("Cat");
         Human human = new Human("Human");
 
-        Runable runnners[] = new Runable[]{bot, cat, human};
-        for (Runable runner : runnners) {
-            runner.run();
-            ((Jumpable) runner).jump();
-        }
-
-
-        System.out.println("------");
-
         /**
          * 2.Создайте два класса: беговая дорожка и стена, при прохождении через которые,
          * участники должны выполнять соответствующие действия (бежать или прыгать),
          * результат выполнения печатаем в консоль (успешно пробежал, не смог пробежать и т.д.).
          */
-        HighObstacle wall = new Wall(10000);
-        HighObstacle wall1 = new Wall(7);
-        HighObstacle wall2 = new Wall(1);
-        LengthObstacle treadmill = new Treadmill(600);
-        LengthObstacle treadmill1 = new Treadmill(7);
-        LengthObstacle treadmill2 = new Treadmill(1);
-
-        for (Runable runnner : runnners) {
-            runnner.run(treadmill);
-            ((Jumpable) runnner).jump(wall);
-        }
-
-        Obstacle obstacles[] = new Obstacle[]{wall, treadmill, wall1,treadmill2,wall2,treadmill1};
-
-        bot.jump(wall);
-        bot.run(treadmill);
+        HighObstacle wall = new Wall(1);
+        HighObstacle wall1 = new Wall(5);
+        HighObstacle wall2 = new Wall(10);
+        LengthObstacle treadmill = new Treadmill(100);
+        LengthObstacle treadmill1 = new Treadmill(500);
+        LengthObstacle treadmill2 = new Treadmill(700);
 
 
-        /**
+        Runable runnners[] = new Runable[]{bot, cat, human};
+        Obstacle obstacles[] = new Obstacle[]{wall, treadmill, wall1, treadmill2, wall2, treadmill1};
+
+         /**
          * 3.Создайте два массива: с участниками и препятствиями, и заставьте всех участников пройти этот набор препятствий.
          *
          * 4.* У препятствий есть длина (для дорожки) или высота (для стены), а участников ограничения на бег и прыжки.
@@ -51,31 +35,14 @@ public class MyApp {
          */
 
         for (Runable runner : runnners) {
+            System.out.println("-------");
+            System.out.println("Забег " + runner);
             for (Obstacle obstacle : obstacles) {
-                runner.pass(obstacle);
-                if (runner.canPass(obstacle) == false){
+                if(runner.overtake(obstacle) == false){
                     break;
                 }
             }
         }
-
-        for (Runable runner : runnners) {
-            System.out.println("-------");
-            System.out.println("Забег " + runner);
-            for (Obstacle obstacle : obstacles) {
-                if (obstacle instanceof LengthObstacle){
-                    runner.run((LengthObstacle) obstacle);
-                    if(runner.validate((LengthObstacle) obstacle) == false) {
-                        break;
-                    }
-                } else {
-                    ((Jumpable) runner).jump((HighObstacle) obstacle);
-                    if(((Jumpable)runner).validate((HighObstacle) obstacle) == false) {
-                        break;
-                    }
-                }
-            }
-        }
-
     }
+
 }
