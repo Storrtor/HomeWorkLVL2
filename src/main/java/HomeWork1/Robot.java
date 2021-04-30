@@ -1,6 +1,6 @@
 package HomeWork1;
 
-public class Robot implements Runable, Jumpable {
+public class Robot implements Passable {
     private String name;
 
     private static final int LIMIT_HIGH = 15;
@@ -10,14 +10,6 @@ public class Robot implements Runable, Jumpable {
         this.name = name;
     }
 
-    @Override
-    public boolean overtake(Obstacle obstacle) {
-        if(obstacle instanceof HighObstacle){
-            return Jumpable.super.overtake(obstacle);
-        } else {
-            return Runable.super.overtake(obstacle);
-        }
-    }
 
     @Override
     public boolean jump(HighObstacle highObstacle) {

@@ -7,9 +7,9 @@ public class MyApp {
          * Эти классы должны уметь бегать и прыгать (методы просто выводят информацию о действии в консоль).
          */
 
-        Robot bot = new Robot("Robot");
-        Cat cat = new Cat("Cat");
-        Human human = new Human("Human");
+        Passable bot = new Robot("Robot");
+        Passable cat = new Cat("Cat");
+        Passable human = new Human("Human");
 
         /**
          * 2.Создайте два класса: беговая дорожка и стена, при прохождении через которые,
@@ -24,7 +24,7 @@ public class MyApp {
         LengthObstacle treadmill2 = new Treadmill(700);
 
 
-        Runable runnners[] = new Runable[]{bot, cat, human};
+        Passable passables[] = new Passable[]{bot, cat, human};
         Obstacle obstacles[] = new Obstacle[]{wall, treadmill, wall1, treadmill2, wall2, treadmill1};
 
          /**
@@ -34,11 +34,11 @@ public class MyApp {
          * Если участник не смог пройти одно из препятствий, то дальше по списку он препятствий не идет.
          */
 
-        for (Runable runner : runnners) {
+        for (Passable passable : passables) {
             System.out.println("-------");
-            System.out.println("Забег " + runner);
+            System.out.println("Забег " + passable);
             for (Obstacle obstacle : obstacles) {
-                if(runner.overtake(obstacle) == false){
+                if(passable.overtake(obstacle) == false){
                     break;
                 }
             }
