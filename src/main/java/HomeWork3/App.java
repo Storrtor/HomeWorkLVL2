@@ -35,6 +35,7 @@
         phoneBook.get("Иванов");
         phoneBook.add("Иванов", new ArrayList<>(Arrays.asList(+716545717l)));
         phoneBook.get("Иванов");
+        phoneBook.get("fghghfghfd");
 
 
        }
@@ -45,19 +46,10 @@
             System.out.println(uniqStr);
 
             Map<String, Integer> map = new HashMap<>();
-            int count = 1;
             for (int i = 0; i < str.length; i++) {
-                for (int j = 0; j < str.length; j++) {
-                    if(i != j){
-                        if(str[i] == str[j]){
-                            count++;
-                        }
-                    }
-                }
-                map.put(str[i],count);
-                count = 1;
+                map.put(str[i], map.getOrDefault(str[i], 0) + 1); //считает количество и выводит его
             }
-            System.out.println(map.toString());
+            System.out.println(map);
         }
 
 

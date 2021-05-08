@@ -4,9 +4,9 @@ import java.util.*;
 
 public class PhoneBook {
 
-    public Map<String, ArrayList<Long>> map;
+    public Map<String, List<Long>> map;
 
-    public PhoneBook(Map<String, ArrayList<Long>> map) {
+    public PhoneBook(Map<String, List<Long>> map) {
         this.map = map;
     }
 
@@ -18,7 +18,7 @@ public class PhoneBook {
         map.put("Букина", new ArrayList<Long>(Arrays.asList(+76665555l)));
     }
 
-    public Map<String, ArrayList<Long>> add(String surname, ArrayList<Long> number){
+    public Map<String, List<Long>> add(String surname, List<Long> number){
         if(map.get(surname) == null){
             map.put(surname, number);
         } else {
@@ -29,7 +29,11 @@ public class PhoneBook {
     }
 
     public void get(String surname){
-        System.out.println(map.get(surname));
+        if(map.get(surname) == null){
+            System.out.println(Collections.emptyList());
+        } else {
+            System.out.println(map.get(surname));
+        }
     }
 
     @Override
