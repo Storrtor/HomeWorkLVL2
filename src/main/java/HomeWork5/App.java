@@ -35,6 +35,7 @@ public class App {
         }
         System.out.println(System.currentTimeMillis() - a);
 
+
     }
 
     /**
@@ -76,7 +77,16 @@ public class App {
         });
         t1.start();
         t2.start();
-
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(System.currentTimeMillis() - a);
 
     }
