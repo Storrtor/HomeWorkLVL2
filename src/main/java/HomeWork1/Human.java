@@ -40,4 +40,15 @@ public class Human implements Passable{
                 "name='" + name + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean swim(WaterObstacle waterObstacle) {
+        if(waterObstacle.getParameter() > LIMIT_LENGTH){
+            System.out.println(this.name + " не переплыл водный обьект длиной " + waterObstacle.getParameter());
+            return false;
+        } else {
+            System.out.println(this.name + " переплыл водный обьект длиной " + waterObstacle.getParameter());
+            return true;
+        }
+    }
 }
