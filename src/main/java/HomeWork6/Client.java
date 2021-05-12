@@ -7,15 +7,13 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 class Client {
-    private static int port = 3334;
-    private static String host = "localhost";
 
     public static void main (String[] args) throws IOException {
 
         Socket server = null;
 
         try {
-            server = new Socket(host, port);
+            server = new Socket(Constants.HOST, Constants.PORT);
         } catch (UnknownHostException e) {
             System.err.println(e);
             System.exit(1);
