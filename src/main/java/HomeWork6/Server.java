@@ -7,29 +7,31 @@ import java.util.Scanner;
 
 class Server {
 
+
     public static void main(String[] args) {
-        Socket socket = null;
+
+        DataInputStream in;
+        DataOutputStream out;
+        BufferedReader stdIn;
+        Socket socket;
         try(ServerSocket serverSocket = new ServerSocket(Constants.PORT)){
             System.out.println("Server started. Wait for connection...");
             socket = serverSocket.accept();
             System.out.println("Client connected");
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-            String msg = null;
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+            stdIn = new BufferedReader(new InputStreamReader(System.in));
+
             while(true){
-                if(!((msg = stdIn.readLine()) != null)) {
-                    break;
-                }
-                out.println(msg);
+                String msg = stdIn.readLine();
+                out.writeUTF(msg);
                 try {
-                    System.out.println("Client: " + in.readLine());
+                    System.out.println("Client: " + in.readUTF());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Server shutting down");
         } catch (IOException ex){
             ex.printStackTrace();
         }
