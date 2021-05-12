@@ -23,6 +23,7 @@ class Server {
             out = new DataOutputStream(socket.getOutputStream());
             stdIn = new BufferedReader(new InputStreamReader(System.in));
 
+
             while(true){
                 String msg = stdIn.readLine();
                 out.writeUTF(msg);
