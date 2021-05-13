@@ -3,39 +3,54 @@ package HomeWork6;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 class Server {
 
 
     public static void main(String[] args) {
-
-        DataInputStream in;
-        DataOutputStream out;
-        BufferedReader stdIn;
-        Socket socket;
         try(ServerSocket serverSocket = new ServerSocket(Constants.PORT)){
             System.out.println("Server started. Wait for connection...");
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
             System.out.println("Client connected");
 
-            in = new DataInputStream(socket.getInputStream());
-            out = new DataOutputStream(socket.getOutputStream());
-            stdIn = new BufferedReader(new InputStreamReader(System.in));
-
-
-            while(true){
-                String msg = stdIn.readLine();
-                out.writeUTF(msg);
-                try {
-                    System.out.println("Client: " + in.readUTF());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            Thread t1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true){
+                        try {
+                            String msg = stdIn.readLine();
+                            if(msg.equals(Constants.STOP_WORD)){
+                                break;
+                            }
+                            out.writeUTF(msg);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("Server shutting down");
                 }
-            }
+            });
+            Thread t2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true){
+                        try {
+                            System.out.println("Client: " + in.readUTF());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            t1.start();
+            t2.start();
         } catch (IOException ex){
             ex.printStackTrace();
         }
-
     }
+
+
 }
