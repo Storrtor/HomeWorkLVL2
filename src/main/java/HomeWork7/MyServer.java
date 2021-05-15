@@ -73,6 +73,9 @@ public class MyServer {
 //        }
     }
 
+    /**
+     * Отправляет сообщение только одному пользователю
+     */
     public synchronized void broadcastMessageToOne(String name, String message) {
         String[] parts = message.split("\\s+");
         List<String> list = new ArrayList<>(Arrays.asList(parts));
