@@ -37,6 +37,7 @@ class Client {
                     try {
                         String msg = stdIn.readLine();
                         if(msg.equals(Constants.STOP_WORD)){
+                            //closeConnection();    Не совсем понимаю где закрывать, если закрывать тут, то ошибки вылазят
                             break;
                         }
                         out.writeUTF(msg);
