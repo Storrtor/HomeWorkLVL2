@@ -1,12 +1,12 @@
 package HomeWork7;
 
-import javax.xml.stream.events.EntityReference;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Непосредственно сервер
@@ -16,12 +16,12 @@ public class MyServer {
     private List<ClientHandler> clients;
     private AuthService authService;
 
-    public MyServer(){
+    public MyServer() {
         try (ServerSocket server = new ServerSocket(ChatConstants.PORT)) {
             authService = new BaseAuthService();
             authService.start();
             clients = new ArrayList<>();
-            while(true){
+            while (true) {
                 System.out.println("Server is waiting for connection");
                 Socket socket = server.accept(); //получение клиента (ожидаем подключение клиента)
                 System.out.println("Client connected");
@@ -32,7 +32,7 @@ public class MyServer {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(authService != null){
+            if (authService != null) {
                 authService.stop();
             }
         }
@@ -56,10 +56,12 @@ public class MyServer {
 
     public synchronized void subscribe(ClientHandler clientHandler) {
         clients.add(clientHandler);
+        broadcastClients();
     }
 
     public synchronized void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
+        broadcastClients();
     }
 
     /**
@@ -92,5 +94,26 @@ public class MyServer {
 //            }
 //        }
     }
+
+    public synchronized void broadcastMessageToClients(String message, List<String> nicknames) {
+        clients.stream().filter(c -> nicknames.contains(c.getName()))
+                .forEach(c -> c.sendMsg(message));
+
+//        for(ClientHandler client : clients){
+//            if(nicknames.contains(client.getName())){
+//                client.sendMsg(message);
+//            }
+//        }
+    }
+
+    public synchronized void broadcastClients() {
+        String clientsMessage = ChatConstants.CLIENTS_LIST + " " +
+                " " +
+                clients.stream()
+                        .map(c -> c.getName())
+                        .collect(Collectors.joining(" "));
+        clients.forEach(c -> c.sendMsg(clientsMessage));
+    }
+
 
 }

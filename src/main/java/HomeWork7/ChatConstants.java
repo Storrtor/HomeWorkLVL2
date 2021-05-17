@@ -12,7 +12,10 @@ public class ChatConstants {
 
     public static final String PRIVATE_MESSAGE = "/w";
 
+    public static final String SEND_TO_LIST = "/list";
+
     public static final int PORT = 8189;
 
+    public static final String CLIENTS_LIST = "/clients";
 }
 

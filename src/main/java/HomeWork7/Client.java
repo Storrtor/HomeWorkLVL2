@@ -80,6 +80,7 @@ public class Client extends JFrame {
                 try {
                     //авторизация
                     while (true){
+
                         String strFromServer = inputStream.readUTF();
                         if(strFromServer.equals(ChatConstants.AUTH_OK)){
                             break;
@@ -92,8 +93,11 @@ public class Client extends JFrame {
                         String strFromServer = inputStream.readUTF();
                         if(strFromServer.equals(ChatConstants.STOP_WORD)){
                             break;
+                        } else if(strFromServer.startsWith(ChatConstants.CLIENTS_LIST)){
+                            chatArea.append("Сейчас онлайн " + strFromServer);
+                        } else {
+                            chatArea.append(strFromServer);
                         }
-                        chatArea.append(strFromServer);
                         chatArea.append("\n");
                     }
                 } catch (IOException ex){

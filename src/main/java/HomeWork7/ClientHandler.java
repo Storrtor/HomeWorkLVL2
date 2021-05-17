@@ -59,11 +59,17 @@ public class ClientHandler {
             }
             if(messageFromClient.startsWith(ChatConstants.PRIVATE_MESSAGE)){
                 server.broadcastMessageToOne(name ,"[" + name + "]: " + messageFromClient);
+            } else if(messageFromClient.startsWith(ChatConstants.SEND_TO_LIST)){
+                String[] splittedStr = messageFromClient.split("\\s+");
+                List<String> nicknames = new ArrayList<>();
+                for (int i = 1; i < splittedStr.length - 1; i++) {
+                    nicknames.add(splittedStr[i]);
+                }
+            } else if (messageFromClient.startsWith(ChatConstants.CLIENTS_LIST)){
+                server.broadcastClients();
             } else {
                 server.broadcastMessage("[" + name + "]: " + messageFromClient); //распространение сообщения по всем клиентам
             }
-
-
         }
     }
 
