@@ -27,8 +27,6 @@ public class MyServer {
                 System.out.println("Client connected");
                 new ClientHandler(this, socket);
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

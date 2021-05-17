@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 
 public class Client extends JFrame {
@@ -20,7 +21,7 @@ public class Client extends JFrame {
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
 
-    public Client(){
+    public Client() {
         try {
             openConnection();
         } catch (IOException e) {
@@ -30,8 +31,8 @@ public class Client extends JFrame {
     }
 
 
-    public void initGUI(){
-        setBounds(600,300,500,500);
+    public void initGUI() {
+        setBounds(600, 300, 500, 500);
         setTitle("Client");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,10 +58,10 @@ public class Client extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                try{
+                try {
                     outputStream.writeUTF(ChatConstants.STOP_WORD);
 //                    closeConnection();
-                }catch (IOException ex){
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -79,28 +80,35 @@ public class Client extends JFrame {
             public void run() {
                 try {
                     //авторизация
-                    while (true){
-
+                    while (true) {
+//                        String startStrFromServer = inputStream.readUTF();
+//                        chatArea.append("Добро пожаловать. Пожалуйста, авторизируйтесь в течении 2-х минут.");
+                        long start = System.currentTimeMillis();
+                        if (System.currentTimeMillis() - start < 1000) {
+//                            chatArea.append("Для авторизации перезайдите пожалуйста в приложение.");
+                            closeConnection();
+                        }
                         String strFromServer = inputStream.readUTF();
-                        if(strFromServer.equals(ChatConstants.AUTH_OK)){
+                        if (strFromServer.equals(ChatConstants.AUTH_OK)) {
                             break;
                         }
                         chatArea.append(strFromServer);
                         chatArea.append("\n");
+                        chatArea.append("Добро пожаловать. Пожалуйста, авторизируйтесь в течении 2-х минут.");
                     }
                     //чтение
-                    while(true){
+                    while (true) {
                         String strFromServer = inputStream.readUTF();
-                        if(strFromServer.equals(ChatConstants.STOP_WORD)){
+                        if (strFromServer.equals(ChatConstants.STOP_WORD)) {
                             break;
-                        } else if(strFromServer.startsWith(ChatConstants.CLIENTS_LIST)){
+                        } else if (strFromServer.startsWith(ChatConstants.CLIENTS_LIST)) {
                             chatArea.append("Сейчас онлайн " + strFromServer);
                         } else {
                             chatArea.append(strFromServer);
                         }
                         chatArea.append("\n");
                     }
-                } catch (IOException ex){
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -127,21 +135,27 @@ public class Client extends JFrame {
 
 
     private void sendMessage() {
-        if(!inputField.getText().trim().isEmpty()) {
+        if (!inputField.getText().trim().isEmpty()) {
             try {
                 outputStream.writeUTF(inputField.getText());
                 inputField.setText("");
                 inputField.grabFocus();
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null,"Send error occured");
+                JOptionPane.showMessageDialog(null, "Send error occured");
             }
         }
     }
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Client::new);
+        try {
+            SwingUtilities.invokeAndWait(Client::new);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }
 
