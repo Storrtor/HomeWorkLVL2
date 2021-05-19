@@ -81,20 +81,12 @@ public class Client extends JFrame {
                 try {
                     //авторизация
                     while (true) {
-//                        String startStrFromServer = inputStream.readUTF();
-//                        chatArea.append("Добро пожаловать. Пожалуйста, авторизируйтесь в течении 2-х минут.");
-                        long start = System.currentTimeMillis();
-                        if (System.currentTimeMillis() - start < 1000) {
-//                            chatArea.append("Для авторизации перезайдите пожалуйста в приложение.");
-                            closeConnection();
-                        }
                         String strFromServer = inputStream.readUTF();
                         if (strFromServer.equals(ChatConstants.AUTH_OK)) {
                             break;
                         }
                         chatArea.append(strFromServer);
                         chatArea.append("\n");
-                        chatArea.append("Добро пожаловать. Пожалуйста, авторизируйтесь в течении 2-х минут.");
                     }
                     //чтение
                     while (true) {

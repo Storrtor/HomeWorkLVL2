@@ -14,7 +14,7 @@
 
         String[] str = new String[]{"Шелти", "Папийон", "Малинуа", "Немецкая овчарка", "Шелти", "Немецкая овчарка",
                 "Колли", "Шипперке", "Шелти", "Такса", "Якутская лайка", "Хаски", "Шелти", "Хаски", "Белая швейцарская овчарка"};
-        makeUniq(str);
+//        makeUniq(str);
 
         /**
          * 2. Написать простой класс ТелефонныйСправочник, который хранит в себе список фамилий и телефонных номеров.
@@ -25,16 +25,18 @@
 
         PhoneBook phoneBook = new PhoneBook(new HashMap<>());
 
-        phoneBook.createMap();
+//        phoneBook.createMap();
 
         phoneBook.add("Ермолаев", new ArrayList<>(Arrays.asList(+799999999l)));
         phoneBook.add("Смирнов", new ArrayList<>(Arrays.asList(+788888888l)));
         phoneBook.add("Миронов", new ArrayList<>(Arrays.asList(+777777777l)));
-        phoneBook.get("Миронов");
+//        phoneBook.get("Миронов");
         phoneBook.info();
         phoneBook.get("Иванов");
         phoneBook.add("Иванов", new ArrayList<>(Arrays.asList(+716545717l)));
         phoneBook.get("Иванов");
+        phoneBook.add("Букина", new ArrayList<>(Arrays.asList(+716545717l, +789747654l, 7888888888l, 79999999l)));
+        phoneBook.get("Букина");
         phoneBook.get("fghghfghfd");
 
 
@@ -46,6 +48,7 @@
             System.out.println(uniqStr);
 
             Map<String, Integer> map = new HashMap<>();
+
             for (int i = 0; i < str.length; i++) {
                 map.put(str[i], map.getOrDefault(str[i], 0) + 1); //считает количество и выводит его
             }
