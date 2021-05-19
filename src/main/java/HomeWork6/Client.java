@@ -46,6 +46,7 @@ class Client {
                     }
                 }
                 System.out.println("Client shutting down the server");
+                closeConnection();
             }
         });
         Thread t2 = new Thread(new Runnable() {

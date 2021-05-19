@@ -12,7 +12,6 @@ class Server {
             System.out.println("Server started. Wait for connection...");
             Socket socket = serverSocket.accept();
             System.out.println("Client connected");
-
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
