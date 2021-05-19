@@ -77,6 +77,7 @@ public class ClientHandler {
     // /auth login pass
     private boolean authentication() throws IOException {
         long start = System.currentTimeMillis();
+
         while (true && System.currentTimeMillis() - start < 120_00) {
             String message = inputStream.readUTF();
             if (message.startsWith(ChatConstants.AUTH_COMMAND)) {

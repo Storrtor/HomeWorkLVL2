@@ -74,13 +74,13 @@ public class Client extends JFrame {
         socket = new Socket(ChatConstants.HOST, ChatConstants.PORT);
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    long start = System.currentTimeMillis();
                     //авторизация
-                    while (true) {
+                    while (true && System.currentTimeMillis() - start < 120_00) {
                         String strFromServer = inputStream.readUTF();
                         if (strFromServer.equals(ChatConstants.AUTH_OK)) {
                             break;
