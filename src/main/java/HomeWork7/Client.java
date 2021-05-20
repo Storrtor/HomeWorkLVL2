@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class Client extends JFrame {
@@ -78,9 +79,8 @@ public class Client extends JFrame {
             @Override
             public void run() {
                 try {
-                    long start = System.currentTimeMillis();
                     //авторизация
-                    while (true && System.currentTimeMillis() - start < 120_00) {
+                    while (true) {
                         String strFromServer = inputStream.readUTF();
                         if (strFromServer.equals(ChatConstants.AUTH_OK)) {
                             break;

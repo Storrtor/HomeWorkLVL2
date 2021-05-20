@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Обслуживает клиента (отвечает за связь между клиентом и сервером)
@@ -24,6 +27,7 @@ public class ClientHandler {
     }
 
     public ClientHandler(MyServer server, Socket socket) {
+
         try {
             this.server = server;
             this.socket = socket;
@@ -35,6 +39,7 @@ public class ClientHandler {
                 public void run() {
                     try {
                         if(authentication() == true){
+                            socket.setSoTimeout(0);
                             readMessages();
                             closeConnectionForAuthClients();
                         }
@@ -77,8 +82,8 @@ public class ClientHandler {
     // /auth login pass
     private boolean authentication() throws IOException {
         long start = System.currentTimeMillis();
-
-        while (true && System.currentTimeMillis() - start < 120_00) {
+        while (true && System.currentTimeMillis() - start < ChatConstants.TIME_OUT) {
+            this.socket.setSoTimeout(ChatConstants.TIME_OUT);
             String message = inputStream.readUTF();
             if (message.startsWith(ChatConstants.AUTH_COMMAND)) {
                 String[] parts = message.split("\\s+");
@@ -99,7 +104,6 @@ public class ClientHandler {
                 }
             }
         }
-        System.out.println("Время истекло");
         return false;
     }
 
