@@ -27,7 +27,6 @@ public class ClientHandler {
     }
 
     public ClientHandler(MyServer server, Socket socket) {
-
         try {
             this.server = server;
             this.socket = socket;
