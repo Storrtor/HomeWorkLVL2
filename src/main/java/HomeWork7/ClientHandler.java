@@ -79,6 +79,11 @@ public class ClientHandler {
         }
     }
 
+    /**
+     * 1. Разобраться с кодом.
+     * 2. Добавить отключение неавторизованных пользователей по таймауту
+     * (120 сек. ждём после подключения клиента, и если он не авторизовался за это время, закрываем соединение).
+     */
     // /auth login pass
     private boolean authentication() throws IOException {
         long start = System.currentTimeMillis();
