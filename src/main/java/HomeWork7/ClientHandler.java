@@ -95,6 +95,7 @@ public class ClientHandler {
                 if (nick != null) {
                     //проверим, что такого пока нет
                     if (!server.isNickBusy(nick)) {
+                        sendMsg(ChatConstants.AUTH_OK);
                         sendMsg(ChatConstants.AUTH_OK + " " + nick);
                         name = nick;
                         server.subscribe(this);
